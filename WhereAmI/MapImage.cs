@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Device.Location;
 using System.Diagnostics;
 using System.Net;
 
@@ -6,14 +7,14 @@ namespace WhereAmI
 {
     class MapImage
     {
-        //public static void Show(GeoCoordinate location)
-        //{
-        //    string filename = $"{location.Latitude:##.000},{location.Longitude:##.000},{location.HorizontalAccuracy:####}m.jpg";
+        public static void Show(GeoCoordinate location)
+        {
+            string filename = $"{location.Latitude:##.000},{location.Longitude:##.000},{location.HorizontalAccuracy:####}m.jpg";
 
-        //    DownloadMapImage(BuildURI(location), filename);
+            DownloadMapImage(BuildURI(location), filename);
 
-        //    OpenWithDefaultApp(filename);
-        //}
+            OpenWithDefaultApp(filename);
+        }
 
         private static void DownloadMapImage(Uri target, string filename)
         {
@@ -29,21 +30,22 @@ namespace WhereAmI
         /// <remarks>
         /// https://developer.here.com/
         /// </remarks>
-        //private static Uri BuildURI(GeoCoordinate location)
-        //{
-        //    #region HERE App ID & App Code
-        //    string HereApi_AppID = "";
-        //    string HereApi_AppCode = "";
-        //    #endregion
+        private static Uri BuildURI(GeoCoordinate location)
+        {
+            
+            #region HERE App Key
+            string HereApi_AppKey = "API KEY HERE";
+            #endregion
 
-        //    var HereApi_DNS = "image.maps.cit.api.here.com";
-        //    var HereApi_URL = $"https://{HereApi_DNS}/mia/1.6/mapview";
-        //    var HereApi_Secrets = $"&app_id={HereApi_AppID}&app_code={HereApi_AppCode}";
+            var HereApi_DNS = "image.maps.ls.hereapi.com";
+            var HereApi_URL = $"https://{HereApi_DNS}/mia/1.6/mapview";
+            var HereApi_Secrets = $"&apiKey={HereApi_AppKey}";
 
-        //    var latlon = $"&lat={location.Latitude}&lon={location.Longitude}";
+            var latlon = $"&lat={location.Latitude}&lon={location.Longitude}";
 
-        //    return new Uri(HereApi_URL + $"?u={location.HorizontalAccuracy}" + HereApi_Secrets + latlon);
-        //}
+            return new Uri(HereApi_URL + $"?u={location.HorizontalAccuracy}" + HereApi_Secrets + latlon);
+
+        }
 
         private static void OpenWithDefaultApp(string filename)
         {

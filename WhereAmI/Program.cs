@@ -20,14 +20,18 @@ namespace WhereAmI
             };
             watcher.PositionChanged += (s, e) =>
             {
+                watcher.Stop();
+
                 Console.WriteLine($"GeoCoordinateWatcher:StatusChanged:{e.Position.Location}");
+
+                // 3. Use the Map Image REST API
+                MapImage.Show(e.Position.Location);
             };
 
             watcher.MovementThreshold = 100;
 
             watcher.Start();
 
-            // 3. Use the Map Image REST API
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
